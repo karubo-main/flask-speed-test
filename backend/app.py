@@ -19,15 +19,21 @@ def ping():
 @app.route('/download', methods=['GET'])
 def download():
     try:
-        # 一時ファイルを作成（確実にアクセスできる場所）
-        temp_dir = tempfile.gettempdir()  # 安全な一時ディレクトリを取得
+        # 一時ファイルを作成
+        temp_dir = tempfile.gettempdir()
         file_path = os.path.join(temp_dir, "testfile.bin")
 
         # 既存のファイルを削除して新規作成
         with open(file_path, "wb") as f:
             f.write(os.urandom(5 * 1024 * 1024))  # 5MBのランダムデータ
 
-        return send_file(file_path, as_attachment=True)
+        # ファイルを送信
+        response = send_file(file_path, as_attachment=True)
+
+        # ファイル送信後に削除（送信後の削除なのでエラーを防ぐ）
+        os.remove(file_path)
+
+        return response
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
