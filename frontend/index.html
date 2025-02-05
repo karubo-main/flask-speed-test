@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ネット速度測定 - アーク・リアクター風</title>
+    <title>ネット速度測定</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
@@ -14,11 +14,11 @@
         <!-- アーク・リアクター風の測定ボタン -->
         <div id="arc-reactor" class="reactor">
             <div class="core" id="startTest">
-                <span>⚡測定開始⚡</span>
+                <span id="buttonText">Ready</span>
             </div>
         </div>
 
-        <!-- 測定中のローディングエフェクト -->
+        <!-- 測定中のローディングアニメーション -->
         <div id="loading" class="hidden">
             <p>🔄 測定中... <span id="progress">0</span>%</p>
             <div class="progress-circle">
