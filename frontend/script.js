@@ -6,7 +6,7 @@ document.getElementById('startTest').addEventListener('click', async function() 
 
     const updateProgress = (value) => {
         document.getElementById('progress').innerText = value;
-        document.getElementById('progressBar').value = value;
+        document.getElementById('progressBar').style.strokeDashoffset = 283 - (283 * value) / 100;
     };
 
     updateProgress(10);
