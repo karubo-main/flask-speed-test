@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ネット速度測定 - アーク・リアクター風</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div class="container">
         <h1>ネット速度測定</h1>
         
-        <!-- アイアンマン風の測定ボタン -->
+        <!-- アーク・リアクター風の測定ボタン -->
         <div id="arc-reactor" class="reactor">
             <div class="core" id="startTest">
                 <span>⚡測定開始⚡</span>
             </div>
         </div>
 
-        <!-- ローディングエフェクト -->
+        <!-- 測定中のローディングエフェクト -->
         <div id="loading" class="hidden">
             <p>🔄 測定中... <span id="progress">0</span>%</p>
             <div class="progress-circle">
@@ -29,8 +29,8 @@
             </div>
         </div>
 
-        <!-- 結果表示 -->
-        <div id="results">
+        <!-- 測定結果 -->
+        <div id="results" class="hidden">
             <p>📥 ダウンロード速度: <span id="downloadSpeed">--</span> Mbps</p>
             <p>📤 アップロード速度: <span id="uploadSpeed">--</span> Mbps</p>
             <p>🎯 Ping: <span id="pingTime">--</span> ms</p>
