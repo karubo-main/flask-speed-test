@@ -1,6 +1,5 @@
-from flask import Flask, request, send_file, jsonify
+from flask import Flask, request, send_file, jsonify, after_this_request
 import os
-import time
 import tempfile
 
 app = Flask(__name__)
@@ -19,7 +18,7 @@ def ping():
 @app.route('/download', methods=['GET'])
 def download():
     try:
-        # 一時ファイルを作成
+        # 一時ディレクトリの取得
         temp_dir = tempfile.gettempdir()
         file_path = os.path.join(temp_dir, "testfile.bin")
 
@@ -27,13 +26,16 @@ def download():
         with open(file_path, "wb") as f:
             f.write(os.urandom(5 * 1024 * 1024))  # 5MBのランダムデータ
 
-        # ファイルを送信
-        response = send_file(file_path, as_attachment=True)
+        # リクエストが完了した後にファイルを削除（エラーを防ぐ）
+        @after_this_request
+        def remove_file(response):
+            try:
+                os.remove(file_path)
+            except Exception as e:
+                app.logger.error(f"ファイル削除エラー: {e}")
+            return response
 
-        # ファイル送信後に削除（送信後の削除なのでエラーを防ぐ）
-        os.remove(file_path)
-
-        return response
+        return send_file(file_path, as_attachment=True)
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
