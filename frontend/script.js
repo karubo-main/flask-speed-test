@@ -2,15 +2,12 @@ const BASE_URL = "https://flask-speed-test-1jc9.onrender.com";
 
 // 測定開始ボタンが押されたときの動作
 document.getElementById('startTest').addEventListener('click', async function() {
-    // ボタンアニメーション
-    let reactor = document.getElementById('arc-reactor');
-    reactor.classList.add('active');
+    let buttonText = document.getElementById('buttonText');
+    buttonText.innerText = "Go";
 
-    // UIの変更
     document.getElementById('results').classList.remove('show');
     document.getElementById('loading').classList.remove('hidden');
 
-    // 進捗更新関数
     const updateProgress = (value) => {
         document.getElementById('progress').innerText = value;
         document.getElementById('progressBar').style.strokeDashoffset = 283 - (283 * value) / 100;
@@ -26,7 +23,7 @@ document.getElementById('startTest').addEventListener('click', async function() 
 
     updateProgress(30);
 
-    // ダウンロード速度測定（50MBファイル）
+    // ダウンロード速度測定
     const downloadStart = performance.now();
     const downloadResponse = await fetch(`${BASE_URL}/download`);
     await downloadResponse.blob();
@@ -36,7 +33,7 @@ document.getElementById('startTest').addEventListener('click', async function() 
 
     updateProgress(70);
 
-    // アップロード速度測定（50MBデータをアップロード）
+    // アップロード速度測定
     const uploadStart = performance.now();
     const uploadResponse = await fetch(`${BASE_URL}/upload`, { method: 'POST', body: new Blob([new Uint8Array(50 * 1024 * 1024)]) });
     const uploadEnd = performance.now();
@@ -44,11 +41,10 @@ document.getElementById('startTest').addEventListener('click', async function() 
     document.getElementById('uploadSpeed').innerText = uploadResult.upload_speed || "エラー";
 
     updateProgress(100);
-    
-    // 測定完了後のUI変更
+
     setTimeout(() => {
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('results').classList.add('show');
-        reactor.classList.remove('active');
+        buttonText.innerText = "Ready";
     }, 500);
 });
