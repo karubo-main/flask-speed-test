@@ -18,7 +18,7 @@ body {
     border-radius: 15px;
 }
 
-/* アイアンマン風アーク・リアクター（測定ボタン） */
+/* アーク・リアクター風ボタン */
 .reactor {
     position: relative;
     width: 150px;
@@ -41,7 +41,7 @@ body {
     box-shadow: 0 0 50px #00ffff;
 }
 
-/* 測定ボタンの中心部 */
+/* 中央の発光エフェクト */
 .core {
     width: 80px;
     height: 80px;
