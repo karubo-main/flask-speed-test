@@ -14,15 +14,15 @@ document.getElementById('startTest').addEventListener('click', async function() 
     // ダウンロード速度測定
     const downloadStart = performance.now();
     const downloadResponse = await fetch(`${BASE_URL}/download`);
-    await downloadResponse.blob(); // 実際にデータを取得
+    await downloadResponse.blob();
     const downloadEnd = performance.now();
     const downloadSpeed = (5 * 8) / ((downloadEnd - downloadStart) / 1000);
     document.getElementById('downloadSpeed').innerText = downloadSpeed.toFixed(2);
 
     // アップロード速度測定
     const uploadStart = performance.now();
-    await fetch(`${BASE_URL}/upload`, { method: 'POST', body: new Blob([new Uint8Array(5 * 1024 * 1024)]) });
+    const uploadResponse = await fetch(`${BASE_URL}/upload`, { method: 'POST', body: new Blob([new Uint8Array(5 * 1024 * 1024)]) });
     const uploadEnd = performance.now();
-    const uploadSpeed = (5 * 8) / ((uploadEnd - uploadStart) / 1000);
-    document.getElementById('uploadSpeed').innerText = uploadSpeed.toFixed(2);
+    const uploadResult = await uploadResponse.json();
+    document.getElementById('uploadSpeed').innerText = uploadResult.upload_speed || "エラー";
 });
