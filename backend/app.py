@@ -1,13 +1,15 @@
 from flask import Flask, request, send_file, jsonify, after_this_request
 import os
 import tempfile
+import time
 
 app = Flask(__name__)
 
-# ルートページ（確認用）
+# ルートページ（フロントエンド提供）
 @app.route('/')
 def home():
-    return "Flask サーバーは動作しています！", 200
+    # フロントエンドの `index.html` を提供
+    return send_file("frontend/index.html")
 
 # Ping測定（レイテンシ確認用）
 @app.route('/ping', methods=['GET'])
@@ -26,7 +28,7 @@ def download():
         with open(file_path, "wb") as f:
             f.write(os.urandom(5 * 1024 * 1024))  # 5MBのランダムデータ
 
-        # リクエストが完了した後にファイルを削除（エラーを防ぐ）
+        # リクエストが完了した後にファイルを削除（エラー防止）
         @after_this_request
         def remove_file(response):
             try:
@@ -40,11 +42,20 @@ def download():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# アップロード速度測定（データを受け取るが保存はしない）
+# アップロード速度測定（動的対応）
 @app.route('/upload', methods=['POST'])
 def upload():
-    request.data  # 受信データを無視（速度測定用）
-    return jsonify({"status": "ok"})
+    try:
+        start_time = time.time()
+        request.data  # 受信データを無視（速度測定用）
+        elapsed_time = time.time() - start_time
+
+        # 5MB（40Mb）をアップロードするのにかかった時間で速度計算
+        upload_speed = (5 * 8) / elapsed_time  # Mbps
+
+        return jsonify({"upload_speed": round(upload_speed, 2)})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # サーバー起動
 if __name__ == '__main__':
