@@ -1,9 +1,9 @@
 const BASE_URL = "https://flask-speed-test-1jc9.onrender.com";
 
-// 測定開始ボタンが押されたときの動作
+// 測定開始ボタンの処理
 document.getElementById('startTest').addEventListener('click', async function() {
     let buttonText = document.getElementById('buttonText');
-    buttonText.innerText = "Go";
+    buttonText.innerText = "Go";  // 測定開始時に「Go」に変更
 
     document.getElementById('results').classList.remove('show');
     document.getElementById('loading').classList.remove('hidden');
@@ -42,9 +42,10 @@ document.getElementById('startTest').addEventListener('click', async function() 
 
     updateProgress(100);
 
+    // 測定完了後に結果を表示
     setTimeout(() => {
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('results').classList.add('show');
-        buttonText.innerText = "Ready";
+        buttonText.innerText = "Ready";  // 測定完了後「Ready」に戻す
     }, 500);
 });
