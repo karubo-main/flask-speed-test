@@ -1,32 +1,83 @@
+/* 全体の設定 */
 body {
     font-family: 'Orbitron', sans-serif;
     text-align: center;
     background-color: #000;
     color: #0ff;
+    margin: 0;
+    padding: 0;
 }
 
+/* コンテナのデザイン */
 .container {
     margin: 50px auto;
     padding: 20px;
-    background: linear-gradient(45deg, #111, #222);
+    background: rgba(0, 0, 0, 0.85);
     box-shadow: 0 0 20px #0ff;
     max-width: 600px;
     border-radius: 15px;
-    animation: neon-glow 1.5s infinite alternate;
 }
 
-.glow-button {
-    background: linear-gradient(90deg, #ff00ff, #00ffff);
-    border: none;
-    padding: 15px 30px;
-    font-size: 18px;
-    color: #000;
+/* アイアンマン風アーク・リアクター（測定ボタン） */
+.reactor {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 20px auto;
+    border-radius: 50%;
+    background: radial-gradient(circle, #0099ff, #0033cc);
+    box-shadow: 0 0 20px #0099ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    border-radius: 10px;
-    transition: 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
 }
 
-.glow-button:hover {
-    box-shadow: 0 0 20px #ff00ff;
+.reactor:hover {
     transform: scale(1.1);
+}
+
+/* 中央の発光エフェクト */
+.core {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffffff, #00ffff);
+    box-shadow: 0 0 25px #00ffff;
+    text-align: center;
+    line-height: 80px;
+    font-weight: bold;
+    color: #000;
+}
+
+/* 測定中のローディングアニメーション */
+.progress-circle {
+    width: 100px;
+    height: 100px;
+    margin: 20px auto;
+}
+
+.progress-circle svg {
+    width: 100%;
+    height: 100%;
+}
+
+.progress-circle .background {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.2);
+    stroke-width: 5;
+}
+
+.progress-circle .progress {
+    fill: none;
+    stroke: #00ffff;
+    stroke-width: 5;
+    stroke-dasharray: 283;
+    stroke-dashoffset: 283;
+    transition: stroke-dashoffset 0.5s ease-in-out;
+}
+
+.hidden {
+    display: none;
 }
