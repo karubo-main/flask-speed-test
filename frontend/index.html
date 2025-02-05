@@ -3,24 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>インターネット速度測定</title>
+    <title>ネット速度測定 - アーク・リアクター風</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>🟡 ネット速度測定 🟢</h1>
-        <button id="startTest" class="glow-button">⚡ 測定開始 ⚡</button>
+        <h1>ネット速度測定</h1>
+        
+        <!-- アイアンマン風の測定ボタン -->
+        <div id="arc-reactor" class="reactor">
+            <div class="core" id="startTest">
+                <span>⚡測定開始⚡</span>
+            </div>
+        </div>
+
+        <!-- ローディングエフェクト -->
         <div id="loading" class="hidden">
             <p>🔄 測定中... <span id="progress">0</span>%</p>
-            <progress id="progressBar" value="0" max="100"></progress>
+            <div class="progress-circle">
+                <svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" class="background"></circle>
+                    <circle cx="50" cy="50" r="45" class="progress" id="progressBar"></circle>
+                </svg>
+            </div>
         </div>
+
+        <!-- 結果表示 -->
         <div id="results">
             <p>📥 ダウンロード速度: <span id="downloadSpeed">--</span> Mbps</p>
             <p>📤 アップロード速度: <span id="uploadSpeed">--</span> Mbps</p>
             <p>🎯 Ping: <span id="pingTime">--</span> ms</p>
         </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
