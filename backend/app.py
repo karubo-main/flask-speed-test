@@ -1,14 +1,15 @@
 from flask import Flask, request, send_file, jsonify
 import os
+import time
 
 app = Flask(__name__)
 
-# ルートページ（エラー回避用）
+# ルートページ（確認用）
 @app.route('/')
 def home():
     return "Flask サーバーは動作しています！", 200
 
-# Ping測定
+# Ping測定（レイテンシ確認用）
 @app.route('/ping', methods=['GET'])
 def ping():
     return "pong", 200
@@ -22,7 +23,7 @@ def download():
             f.write(os.urandom(5 * 1024 * 1024))  # 5MBのランダムデータ
     return send_file(file_path, as_attachment=True)
 
-# アップロード速度測定
+# アップロード速度測定（データを受け取るが保存はしない）
 @app.route('/upload', methods=['POST'])
 def upload():
     request.data  # 受信データを無視（速度測定用）
