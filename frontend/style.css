@@ -26,19 +26,22 @@ body {
     margin: 20px auto;
     border-radius: 50%;
     background: radial-gradient(circle, #0099ff, #0033cc);
-    box-shadow: 0 0 20px #0099ff;
+    box-shadow: 0 0 30px #0099ff;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
+    animation: glow 2s infinite alternate;
 }
 
-.reactor:hover {
-    transform: scale(1.1);
+/* 測定ボタンが押されたときの発光 */
+.reactor:active {
+    transform: scale(0.9);
+    box-shadow: 0 0 50px #00ffff;
 }
 
-/* 中央の発光エフェクト */
+/* 測定ボタンの中心部 */
 .core {
     width: 80px;
     height: 80px;
@@ -78,6 +81,17 @@ body {
     transition: stroke-dashoffset 0.5s ease-in-out;
 }
 
+/* ローディングと結果を非表示 */
 .hidden {
     display: none;
+}
+
+/* 測定結果のアニメーション */
+#results {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#results.show {
+    opacity: 1;
 }
