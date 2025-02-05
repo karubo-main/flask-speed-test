@@ -54,39 +54,7 @@ body {
     color: #000;
 }
 
-/* 測定中のローディングアニメーション */
-.progress-circle {
-    width: 100px;
-    height: 100px;
-    margin: 20px auto;
-}
-
-.progress-circle svg {
-    width: 100%;
-    height: 100%;
-}
-
-.progress-circle .background {
-    fill: none;
-    stroke: rgba(255, 255, 255, 0.2);
-    stroke-width: 5;
-}
-
-.progress-circle .progress {
-    fill: none;
-    stroke: #00ffff;
-    stroke-width: 5;
-    stroke-dasharray: 283;
-    stroke-dashoffset: 283;
-    transition: stroke-dashoffset 0.5s ease-in-out;
-}
-
-/* ローディングと結果を非表示 */
-.hidden {
-    display: none;
-}
-
-/* 測定結果のアニメーション */
+/* 測定結果の表示アニメーション */
 #results {
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
