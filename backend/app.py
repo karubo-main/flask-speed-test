@@ -1,15 +1,15 @@
-from flask import Flask, request, send_file, jsonify, after_this_request
+from flask import Flask, request, send_file, jsonify, after_this_request, send_from_directory
 import os
 import tempfile
 import time
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend', static_url_path='')
 
 # ルートページ（フロントエンド提供）
 @app.route('/')
 def home():
-    # フロントエンドの `index.html` を提供
-    return send_file("frontend/index.html")
+    # フロントエンドの `index.html` を提供（static フォルダから読み込む）
+    return send_from_directory(app.static_folder, 'index.html')
 
 # Ping測定（レイテンシ確認用）
 @app.route('/ping', methods=['GET'])
