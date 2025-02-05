@@ -2,7 +2,6 @@ from flask import Flask, request, send_file, jsonify, after_this_request, send_f
 import os
 import tempfile
 import time
-import threading
 
 # Flaskアプリケーションを作成し、フロントエンドのディレクトリを指定
 app = Flask(__name__, static_folder="../frontend", static_url_path="")
