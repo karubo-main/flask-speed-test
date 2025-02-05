@@ -1,12 +1,11 @@
 const BASE_URL = "https://flask-speed-test-1jc9.onrender.com";
 
-// 測定開始ボタンの処理
 document.getElementById('startTest').addEventListener('click', async function() {
     let buttonText = document.getElementById('buttonText');
     let resultsDiv = document.getElementById('results');
     let loadingDiv = document.getElementById('loading');
 
-    // 測定中はボタンを「Go」に変更し、UIの表示を制御
+    // 測定開始時のUI変更
     buttonText.innerText = "Go";
     resultsDiv.classList.remove('show');
     loadingDiv.classList.remove('hidden');
@@ -22,7 +21,7 @@ document.getElementById('startTest').addEventListener('click', async function() 
     const pingStart = performance.now();
     await fetch(`${BASE_URL}/ping`);
     const pingEnd = performance.now();
-    document.getElementById('pingTime').innerText = ((pingEnd - pingStart).toFixed(2));
+    document.getElementById('pingTime').innerText = ((pingEnd - pingStart) / 2).toFixed(2);
 
     updateProgress(30);
 
@@ -45,10 +44,9 @@ document.getElementById('startTest').addEventListener('click', async function() 
 
     updateProgress(100);
 
-    // 測定完了後に結果を表示（UIを戻さない）
     setTimeout(() => {
-        loadingDiv.classList.add('hidden'); // 測定中アニメーションを非表示
-        resultsDiv.classList.add('show'); // 測定結果を表示
-        buttonText.innerText = "Ready"; // ボタンをReadyに戻すが、結果はそのまま
+        loadingDiv.classList.add('hidden');
+        resultsDiv.classList.add('show');
+        buttonText.innerText = "Ready";
     }, 500);
 });
