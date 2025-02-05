@@ -1,15 +1,15 @@
-from flask import Flask, request, send_file, jsonify, after_this_request
+from flask import Flask, request, send_from_directory, send_file, jsonify, after_this_request
 import os
 import tempfile
 import time
-import threading
 
-app = Flask(__name__)
+# Flaskアプリケーションを作成し、フロントエンドのディレクトリを指定
+app = Flask(__name__, static_folder="../frontend", static_url_path="")
 
-# ルートページ（フロントエンド提供）
+# ルートページ（フロントエンドの index.html を提供）
 @app.route('/')
 def home():
-    return send_file("frontend/index.html")
+    return send_from_directory(app.static_folder, "index.html")
 
 # Ping測定（レイテンシ確認用）
 @app.route('/ping', methods=['GET'])
@@ -24,9 +24,9 @@ def download():
         temp_dir = tempfile.gettempdir()
         file_path = os.path.join(temp_dir, "testfile.bin")
 
-        # 既存のファイルを削除して新規作成
+        # 既存のファイルを削除して新規作成（20MBのランダムデータ）
         with open(file_path, "wb") as f:
-            f.write(os.urandom(20 * 1024 * 1024))  # 20MBのランダムデータ
+            f.write(os.urandom(20 * 1024 * 1024))  # 20MB
 
         # リクエストが完了した後にファイルを削除（エラー防止）
         @after_this_request
