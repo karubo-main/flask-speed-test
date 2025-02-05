@@ -1,9 +1,16 @@
 const BASE_URL = "https://flask-speed-test-1jc9.onrender.com";
 
+// 測定開始ボタンが押されたときの動作
 document.getElementById('startTest').addEventListener('click', async function() {
-    document.getElementById('results').style.display = 'none';
+    // ボタンアニメーション
+    let reactor = document.getElementById('arc-reactor');
+    reactor.classList.add('active');
+
+    // UIの変更
+    document.getElementById('results').classList.remove('show');
     document.getElementById('loading').classList.remove('hidden');
 
+    // 進捗更新関数
     const updateProgress = (value) => {
         document.getElementById('progress').innerText = value;
         document.getElementById('progressBar').style.strokeDashoffset = 283 - (283 * value) / 100;
@@ -37,8 +44,11 @@ document.getElementById('startTest').addEventListener('click', async function() 
     document.getElementById('uploadSpeed').innerText = uploadResult.upload_speed || "エラー";
 
     updateProgress(100);
+    
+    // 測定完了後のUI変更
     setTimeout(() => {
         document.getElementById('loading').classList.add('hidden');
-        document.getElementById('results').style.display = 'block';
+        document.getElementById('results').classList.add('show');
+        reactor.classList.remove('active');
     }, 500);
 });
