@@ -1,6 +1,7 @@
 from flask import Flask, request, send_file, jsonify
 import os
 import time
+import tempfile
 
 app = Flask(__name__)
 
@@ -17,11 +18,16 @@ def ping():
 # ダウンロード速度測定（5MBのファイルを返す）
 @app.route('/download', methods=['GET'])
 def download():
-    file_path = "testfile.bin"
-    if not os.path.exists(file_path):
-        with open(file_path, "wb") as f:
-            f.write(os.urandom(5 * 1024 * 1024))  # 5MBのランダムデータ
-    return send_file(file_path, as_attachment=True)
+    try:
+        # 一時ファイルを作成
+        with tempfile.NamedTemporaryFile(delete=False) as tmp:
+            tmp.write(os.urandom(5 * 1024 * 1024))  # 5MBのランダムデータ
+            tmp_path = tmp.name
+
+        return send_file(tmp_path, as_attachment=True)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # アップロード速度測定（データを受け取るが保存はしない）
 @app.route('/upload', methods=['POST'])
